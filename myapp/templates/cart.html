@@ -1,0 +1,105 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load cart %}
+
+{% block title %}
+<title>Online Bazar | Cart Page</title>
+{% endblock %}
+
+{% block content %}
+<h5 class="background mt-2 p-2 text-center text-light" style="margin-top:20px !important;">
+    Cart Section
+</h5>
+
+<div class="table-responsive">
+    <table class="table table-light table-hover table-striped">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Price</th>
+            <th></th>
+            <th>QTY</th>
+            <th></th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+
+        {% for key in Cart.keys %}
+        <tr>
+            <td>
+                {% if request|cartproductimage:key %}
+                <img src="{{ request|cartproductimage:key }}" height="100px" width="100px" alt="">
+                {% endif %}
+            </td>
+
+            <td>{{ request|cartproductname:key }}</td>
+            <td>{{ request|cartcolor:key }}</td>
+            <td>{{ request|cartsize:key }}</td>
+
+            <td>&#8377; {{ request|carttotal:key }}</td>
+            <td>
+                <a href="{% url 'update-cart' key 0 %}" class="btn text-primary">
+                    <i class="material-icons">remove</i>
+                </a>
+            </td>
+
+            <td>{{ request|cartQTY:key }}</td>
+
+            <td>
+                <a href="{% url 'update-cart' key 1 %}" class="btn text-primary">
+                    <i class="material-icons">add</i>
+                </a>
+            </td>
+            <td>&#8377; {{ request|carttotal:key }}</td>
+            <td>
+                <button class="btn text-primary" onclick="fun('{{ key }}')">
+                    <i class="material-icons">delete_forever</i>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-12"></div>
+    <div class="col-md-6 col-sm-12 col-12">
+        <table class="table table-light table-striped table-hover">
+            <tr>
+                <th>Total</th>
+                <td>&#8377;{{Total}}</td>
+            </tr>
+            <tr>
+                <th>Shipping</th>
+                <td>{{shipping}}</td>
+            </tr>
+            <tr>
+                <th>Final</th>
+                <td>{{final}}</td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <a href="{% url 'checkout' %}" class="text-decoration-none">
+                        <h5 class="p-2 w-100 text-center background text-light">Checkout</h5>
+                    </a>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <a href="{% url 'shop' 'All' 'All' 'All' %}" class="text-decoration-none">
+                        <h5 class="p-2 w-100 text-center background text-light">Shop More</h5>
+                    </a>
+                </th>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    function fun(num) {
+        if (confirm("Are You Sure!!! You Want to Delete That Item.")) {
+            window.location.href = `/deletecart/${num}/`;
+        }
+    }
+</script>
+{% endblock %}

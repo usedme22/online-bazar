@@ -1,0 +1,199 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}
+<title>Online Bazar | Edit Product</title>
+{% endblock %}
+
+{% block content %}
+
+<h5 class="background mt-3 p-2 text-center text-light">
+    Edit Product Section
+</h5>
+
+<div class="container">
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Product Name -->
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text"
+                   name="name"
+                   class="form-control"
+                   value="{{ Product.name }}">
+        </div>
+
+        <!-- Categories -->
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Main Category</label>
+                <select name="maincategory" class="form-control">
+                    {% for i in Maincategory %}
+                    <option value="{{ i.id }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Sub Category</label>
+                <select name="subcategory" class="form-control">
+                    {% for i in Subcategory %}
+                    <option value="{{ i.id }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Brand</label>
+                <select name="brand" class="form-control">
+                    {% for i in Brand %}
+                    <option value="{{ i.id }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Stock</label>
+                <select name="stock" class="form-control">
+                    {% for i in Stock %}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Price -->
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Base Price</label>
+                <input type="number"
+                       name="baseprice"
+                       class="form-control"
+                       value="{{ Product.baseprice }}">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Discount</label>
+                <input type="number"
+                       name="discount"
+                       class="form-control"
+                       value="{{ Product.discount }}">
+            </div>
+
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description"
+                      rows="5"
+                      class="form-control">{{ Product.description }}</textarea>
+        </div>
+
+        <!-- Colors -->
+        <div class="mb-3">
+            <label class="form-label">Colors</label>
+
+            <div class="row">
+                {% for color in Colors %}
+                <div class="col-md-2 col-sm-4 col-6">
+                    <label>
+                        <input type="checkbox"
+                               name="color"
+                               value="{{ color }}">
+                        {{ color }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Sizes -->
+        <div class="mb-3">
+            <label class="form-label">Sizes</label>
+
+            <div class="row">
+                {% for size in Sizes %}
+                <div class="col-md-2 col-sm-4 col-6">
+                    <label>
+                        <input type="checkbox"
+                               name="size"
+                               value="{{ size }}">
+                        {{ size }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Images -->
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label>Pic1</label><br>
+
+                {% if Product.pic1 %}
+                <img src="{{ Product.pic1.url }}"
+                     width="100"
+                     height="100"
+                     class="mb-2">
+                {% endif %}
+
+                <input type="file" name="pic1" class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Pic2</label><br>
+
+                {% if Product.pic2 %}
+                <img src="{{ Product.pic2.url }}"
+                     width="100"
+                     height="100"
+                     class="mb-2">
+                {% endif %}
+
+                <input type="file" name="pic2" class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Pic3</label><br>
+
+                {% if Product.pic3 %}
+                <img src="{{ Product.pic3.url }}"
+                     width="100"
+                     height="100"
+                     class="mb-2">
+                {% endif %}
+
+                <input type="file" name="pic3" class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Pic4</label><br>
+
+                {% if Product.pic4 %}
+                <img src="{{ Product.pic4.url }}"
+                     width="100"
+                     height="100"
+                     class="mb-2">
+                {% endif %}
+
+                <input type="file" name="pic4" class="form-control">
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+            Update Product
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

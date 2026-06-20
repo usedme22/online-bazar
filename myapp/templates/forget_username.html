@@ -1,0 +1,30 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}
+<title>Online Bazar | Forget Username Page </title>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <img src="{% static 'images/image.png' %}" alt="">
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-sm-12 col-12">
+                  <h5 class="text-center p-2 mt-3 background text-light">Forget Username Section</h5>
+{% for i in messages %}
+<div class="alert alert-danger" role="alert">
+    {{i}}
+</div>
+{% endfor %}
+<form action="" method="POST">
+     {% csrf_token %}
+  <div class="mb-3">
+    <label for="username">User Name</label>
+    <input type="text" class="form-control" name="username" placeholder="Enter User Name to Forget Password">
+  </div>
+  <button type="submit" class="w-100 text-center background text-light p-2">Login</button>
+</form>
+    </div>
+    </div>
+</div>
+{% endblock %}

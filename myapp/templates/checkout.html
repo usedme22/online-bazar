@@ -1,0 +1,177 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load cart %}
+
+{% block title %}
+<title>Online Bazar | Checkout</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- Billing Details -->
+    <div class="col-md-6 col-sm-12 col-12">
+        <h5 class="text-center p-2 mt-3 background text-light">
+            Billing Details
+        </h5>
+
+        <table class="table table-light table-striped table-hover">
+            <tr>
+                <th>Name</th>
+                <td>{{ User.name }}</td>
+            </tr>
+
+            <tr>
+                <th>Username</th>
+                <td>{{ User.username }}</td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td>{{ User.email }}</td>
+            </tr>
+
+            <tr>
+                <th>Phone</th>
+                <td>{{ User.phone }}</td>
+            </tr>
+
+            <tr>
+                <th>Address Line 1</th>
+                <td>{{ User.addressline1 }}</td>
+            </tr>
+
+            <tr>
+                <th>Address Line 2</th>
+                <td>{{ User.addressline2 }}</td>
+            </tr>
+
+            <tr>
+                <th>Address Line 3</th>
+                <td>{{ User.addressline3 }}</td>
+            </tr>
+
+            <tr>
+                <th>Pin Code</th>
+                <td>{{ User.pin }}</td>
+            </tr>
+
+            <tr>
+                <th>City</th>
+                <td>{{ User.city }}</td>
+            </tr>
+
+            <tr>
+                <th>State</th>
+                <td>{{ User.state }}</td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <a href="{% url 'updateprofile' %}" class="text-decoration-none">
+                        <h5 class="p-3 w-100 text-center background text-light mb-0">
+                            Update Profile
+                        </h5>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="col-md-6 col-sm-12 col-12">
+
+        <h5 class="background text-center text-light p-2 mt-3">
+            Cart Section
+        </h5>
+
+        <div class="table-responsive">
+            <table class="table table-light table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Color</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for key in Cart.keys %}
+                    <tr>
+                        <td>
+                            {% if request|cartproductimage:key %}
+                            <img src="{{ request|cartproductimage:key }}" alt="Product" width="80" height="80">
+                            {% endif %}
+                        </td>
+
+                        <td>{{ request|cartproductname:key }}</td>
+                        <td>{{ request|cartcolor:key }}</td>
+                        <td>{{ request|cartsize:key }}</td>
+                        <td>₹{{ request|cartprice:key }}</td>
+                        <td>{{ request|cartQTY:key }}</td>
+                        <td>₹{{ request|carttotal:key }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            No items in cart
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Order Summary -->
+        <table class="table table-light table-striped table-hover mt-3">
+            <tr>
+                <th>Total</th>
+                <td>₹{{ total }}</td>
+            </tr>
+
+            <tr>
+                <th>Shipping</th>
+                <td>₹{{ shipping }}</td>
+            </tr>
+
+            <tr>
+                <th>Final Amount</th>
+                <td><strong>₹{{ final }}</strong></td>
+            </tr>
+        </table>
+
+        <!-- Payment Form -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <table class="table table-light table-striped table-hover">
+                <tr>
+                    <th>Mode of Payment</th>
+                    <td>
+                        <select name="mode" class="form-control" required>
+                            <option value="COD">Cash On Delivery</option>
+                            <option value="Net Banking">
+                                Net Banking / Card / UPI / Wallet
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <button type="submit" class="border-0 bg-transparent w-100 p-0">
+                            <h5 class="p-2 w-100 text-center background text-light mb-0">
+                                Place Order
+                            </h5>
+                        </button>
+                    </th>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+{% endblock %}

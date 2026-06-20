@@ -1,0 +1,60 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}
+<title>Online Bazar | SignUp </title>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <img src="{% static 'images/img_15.png' %}" alt=""height="590px">
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-sm-12 col-12">
+          {% for i in messages %}
+          <div class="alert alert-danger" role="alert">
+            {{i}}
+          </div>
+          {% endfor %}
+<form action=""method="POST">
+    {% csrf_token %}
+  <div class="mb-3">
+    <h5 class="text-center p-2 mt-3 background text-light">SignUp Section</h5>
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="name" placeholder="Enter Name">
+  </div>
+  <div class="mb-3">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" name="username"placeholder="Enter Username">
+  </div>
+  <div class="mb-3">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" name="email"placeholder="Enter Email">
+  </div>
+  <div class="mb-3">
+    <label for="phone">Phone</label>
+    <input type="number" class="form-control" name="phone"placeholder="Enter Phone Number">
+  </div>
+  <div class="mb-3">
+    <label for="password">Password</label>
+    <input type="text" class="form-control" name="password"placeholder="Enter Password">
+  </div>
+  <div class="mb-3">
+    <label for="cpassword">Conform Password</label>
+    <input type="text" class="form-control" name="cpassword"placeholder="Enter Conform Password">
+  </div>
+   <div class="mb-3">
+    <label for="accounttype">Account Type</label>
+    <select name="actype" class="form-control">
+      <option value="seller" class="w-100">Seller</option>
+      <option value="buyer" class="w-100">Buyer</option>
+    </select>
+  </div>
+  <button type="submit" class="w-100 text-center background text-light p-2">SignUp</button>
+  <div class="d-flex justify-content-between">
+    <a href="{% url 'login' %}">Already User?Login</a>
+  </div>
+</form>
+    </div>
+    </div>
+</div>
+{% endblock %}
